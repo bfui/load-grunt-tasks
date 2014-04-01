@@ -27,7 +27,8 @@ module.exports = function (grunt, options) {
 
 	multimatch(names, pattern).forEach(function(name){
 		var taskName = name.replace('grunt-contrib-', '').replace('grunt-', '');
-		var modulePath = path.join(path.resolve(modules_dir), name, 'tasks', taskName);
+		var moduleBasePath = path.resolve(modules_dir, name);
+		var modulePath = path.join(moduleBasePath, 'tasks', taskName);
 		require(modulePath)(grunt);
 	});
 };
