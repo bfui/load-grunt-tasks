@@ -2,10 +2,12 @@
 var path = require('path');
 var findup = require('findup-sync');
 var multimatch = require('multimatch');
+var fs = require('fs');
 
 function arrayify(el) {
 	return Array.isArray(el) ? el : [el];
 }
+
 
 module.exports = function (grunt, options) {
 	options = options || {};
@@ -27,7 +29,10 @@ module.exports = function (grunt, options) {
 
 	multimatch(names, pattern).forEach(function(name){
 		var taskName = name.replace('grunt-contrib-', '').replace('grunt-', '');
-		var moduleBasePath = path.resolve(modules_dir, name);
+		var moduleBasePath = path.resolve('../', name);
+		if ( !fs.existsSync(moduleBasePath) ) {
+			moduleBasePath = path.resolve(modules_dir, name);
+		}
 		var modulePath = path.join(moduleBasePath, 'tasks', taskName);
 		require(modulePath)(grunt);
 	});
