@@ -13,7 +13,7 @@ module.exports = function (grunt, options) {
 	var pattern = arrayify(options.pattern || ['grunt-*']);
 	var config = options.config || findup('package.json');
 	var scope = arrayify(options.scope || ['dependencies', 'devDependencies', 'peerDependencies']);
-	var modules_dir = options.modulesDir || './node_modules/';
+	var modules_dir = options.modulesDir || 'node_modules';
 
 	if (typeof config === 'string') {
 		config = require(path.resolve(config));
@@ -27,6 +27,7 @@ module.exports = function (grunt, options) {
 
 	multimatch(names, pattern).forEach(function(name){
 		var taskName = name.replace('grunt-contrib-', '').replace('grunt-', '');
-		require(modules_dir+name+'/tasks/'+taskName)(grunt);
+		var modulePath = path.join(path.resolve(modules_dir), name, 'tasks', taskName);
+		require(modulePath)(grunt);
 	});
 };
