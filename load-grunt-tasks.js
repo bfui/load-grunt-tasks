@@ -1,8 +1,8 @@
 'use strict';
+
 var path = require('path');
 var findup = require('findup-sync');
 var multimatch = require('multimatch');
-var fs = require('fs');
 
 function arrayify(el) {
 	return Array.isArray(el) ? el : [el];
