@@ -29,7 +29,7 @@ module.exports = function (grunt, options) {
 
 	multimatch(names, pattern).forEach(function(name){
 		var taskName = name.replace('grunt-contrib-', '').replace('grunt-', '');
-		var modulePath = findup(path.join('node_modules', name, 'tasks', taskName+'.js'));
+		var modulePath = findup(path.join('node_modules', name, 'tasks', taskName)+'.{js,coffee}');
 		require(modulePath)(grunt);
 	});
 };
